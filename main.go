@@ -97,6 +97,10 @@ func conditionTesla(w http.ResponseWriter, r *http.Request) {
       return
   }
   go func() {
+    body := "{\"animation\": \"cylon\", \"rgbw\": \"0,255,0,0\", \"percent\": 10.0, \"velocity\" : 30}"
+    httpClient := &http.Client{}
+    req , _  := http.NewRequest(http.MethodPut, "http://192.168.1.127:9000/lumen", strings.NewReader(body))
+    _, _ = httpClient.Do(req)
     client, err := tesla.NewClient(
       &tesla.Auth{
         ClientID:     os.Getenv("TESLA_CLIENT_ID"),
@@ -129,16 +133,10 @@ func conditionTesla(w http.ResponseWriter, r *http.Request) {
     if strings.ToLower(request.State) == "off" {
       _ = vehicle.StopAirConditioning()
     }
-    //_, _ = http.Get("http://192.168.1.247/setcolor?red=255&green=255&blue=255")
     _ = vehicle.FlashLights()
   }()
 
 }
-/*
-requests.get("http://192.168.1.247/setpixelcolor?pixel="+str(i)+"&red=0&green=0&blue=255")
-requests.get("http://192.168.1.247/setpixelcolor?pixel=1&red=255&green=255&blue=255")
-requests.get("http://192.168.1.247/setcolor?red=255&green=255&blue=255")
-*/
 
 func main() {
   /*
