@@ -1,0 +1,8 @@
+namespace: iftttgateway 
+
+resources:
+- iftttgateway.yaml 
+- ingressRoutes.yaml
+
+generators:
+- secretsGenerator.yaml 

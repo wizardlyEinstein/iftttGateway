@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iftttgateway 
+  labels:
+    app: iftttgateway 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iftttgateway 
+  template:
+    metadata:
+      labels:
+        app: iftttgateway 
+    spec:
+      containers:
+      - name: iftttgateway 
+        image: lelandsindt/iftttgateway:latest 
+        env:
+        - name: SECRET
+          valueFrom:
+            secretKeyRef:
+              name: iftttgateway
+              key: SECRET
+        - name: TESLA_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: iftttgateway
+              key: TESLA_USERNAME
+        - name: TESLA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: iftttgateway
+              key: TESLA_PASSWORD
+        - name: TESLA_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: iftttgateway
+              key: TESLA_CLIENT_ID
+        - name: TESLA_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: iftttgateway
+              key: TESLA_CLIENT_SECRET
+        ports:
+        - containerPort: 8000 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iftttgateway 
+spec:
+  ports:
+  - port: 6081
+    targetPort: 8000 
+  type: LoadBalancer
+  selector:
+    app: iftttgateway
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ifttt2
+spec:
+  ports:
+  - port: 8000 
+    targetPort: 8000
+  selector:
+    app: iftttgateway
