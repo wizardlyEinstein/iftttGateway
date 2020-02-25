@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/jsgoecke/tesla"
+  "github.com/jsgoecke/tesla"
   "time"
   "fmt"
   "strings"
@@ -11,11 +11,10 @@ import (
   "net/http"
   "log"
   "github.com/gorilla/mux"
-  //"github.com/hashicorp/mdns"
 )
 
 // Secret to prove you are worthy.
-var Secret = os.Getenv("SECRET") 
+var Secret = os.Getenv("SECRET")
 
 type request struct{
     Secret string `json:"secret"`
@@ -25,7 +24,7 @@ type request struct{
 func secretOk(request request) bool {
     if request.Secret == Secret {
         return true
-    } 
+    }
     return false
 }
 
@@ -42,23 +41,16 @@ func party(w http.ResponseWriter, r *http.Request) {
         return
     }
     if strings.ToLower(request.State) == "on" {
-        go func() { 
+        go func() {
             _, _ = http.Get("http://192.168.1.247/rotate")
         }()
-    } 
+    }
     if strings.ToLower(request.State) == "off" {
-        go func() { 
+        go func() {
             _, _ = http.Get("http://192.168.1.247/setcolor?red=255&green=255&blue=255")
         }()
     }
     w.Write([]byte("ok\n"))
-}
-
-func white(w http.ResponseWriter, r *http.Request) {
-    w.Write([]byte("ok\n"))
-    go func() {
-        _, _ = http.Get("http://192.168.1.247/setcolor?red=255&green=255&blue=255")
-    }()
 }
 
 func hotwater(w http.ResponseWriter, r *http.Request) {
@@ -139,24 +131,9 @@ func conditionTesla(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-  /*
-  // Make a channel for results and start listening
-  entriesCh := make(chan *mdns.ServiceEntry, 4)
-  go func() {
-      for entry := range entriesCh {
-          fmt.Printf("Got new entry: %v\n", entry)
-      }
-  }()
-
-  // Start the lookup
-  mdns.Lookup("kitchen.local", entriesCh)
-  close(entriesCh)
-  */
-
     r := mux.NewRouter()
     r.HandleFunc("/", root)
     r.HandleFunc("/kitchen/party", party)
-    r.HandleFunc("/white", white)
     r.HandleFunc("/hotwater", hotwater)
     r.HandleFunc("/tesla/condition", conditionTesla)
 
