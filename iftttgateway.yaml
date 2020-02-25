@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: iftttgateway 
-        image: lelandsindt/iftttgateway:latest 
+        image: lelandsindt/iftttgateway
         env:
         - name: SECRET
           valueFrom:

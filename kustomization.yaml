@@ -1,5 +1,9 @@
 namespace: iftttgateway 
 
+images:
+- name: lelandsindt/iftttgateway
+  newTag: "0.1"
+
 resources:
 - iftttgateway.yaml 
 - ingressRoutes.yaml
