@@ -12,6 +12,8 @@ spec:
     services:
     - name: ifttt2 
       port: 8000
+    middlewares:
+    - name: redirect
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -29,4 +31,13 @@ spec:
       port: 8000
   tls:
     certResolver: myresolver
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: redirect
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
 
