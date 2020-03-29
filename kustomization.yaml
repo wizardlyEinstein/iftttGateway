@@ -2,7 +2,7 @@ namespace: iftttgateway
 
 images:
 - name: lelandsindt/iftttgateway
-  newTag: "0.1"
+  newTag: "0.2"
 
 resources:
 - iftttgateway.yaml 
