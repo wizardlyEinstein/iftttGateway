@@ -6,7 +6,7 @@ images:
 
 resources:
 - iftttgateway.yaml 
-- ingressRoutes.yaml
+- ingress.yaml
 
 generators:
 - secretsGenerator.yaml 

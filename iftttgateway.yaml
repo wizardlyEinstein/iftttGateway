@@ -23,26 +23,6 @@ spec:
             secretKeyRef:
               name: iftttgateway
               key: SECRET
-        - name: TESLA_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: iftttgateway
-              key: TESLA_USERNAME
-        - name: TESLA_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: iftttgateway
-              key: TESLA_PASSWORD
-        - name: TESLA_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              name: iftttgateway
-              key: TESLA_CLIENT_ID
-        - name: TESLA_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: iftttgateway
-              key: TESLA_CLIENT_SECRET
         ports:
         - containerPort: 8000 
 ---
